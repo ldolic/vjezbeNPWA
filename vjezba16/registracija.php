@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registracija korisnika</title>
+    <title>Vjezba 16</title>
 </head>
 <body>
     <h2>Registracija korisnika</h2>
@@ -31,15 +31,15 @@
 </body>
 </html>
 <?php
-// Povezivanje s bazom podataka
+
 $con = mysqli_connect("localhost", "root", "", "baza_vjezba15");
 
-// Provjera povezanosti
+
 if (!$con) {
     die("Povezivanje s bazom nije uspjelo: " . mysqli_connect_error());
 }
 
-// Provjera da li je forma poslata
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ime = mysqli_real_escape_string($con, $_POST['ime']);
     $prezime = mysqli_real_escape_string($con, $_POST['prezime']);
@@ -48,14 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $telefon = mysqli_real_escape_string($con, $_POST['telefon']);
 
-    // Šifriranje lozinke
-    $lozinka_sha256 = hash('sha256', $lozinka);
 
-    // SQL upit za unos podataka u tablicu
+    $lozinka1 = hash('sha256', $lozinka);
+
+
     $query = "INSERT INTO korisnici (ime, prezime, korisnicko_ime, lozinka, email, telefon) 
-              VALUES ('$ime', '$prezime', '$korisnicko_ime', '$lozinka_sha256', '$email', '$telefon')";
+              VALUES ('$ime', '$prezime', '$korisnicko_ime', '$lozinka1', '$email', '$telefon')";
 
-    // Izvršenje upita
+
     if (mysqli_query($con, $query)) {
         echo "Korisnik je uspješno registriran!";
     } else {
@@ -63,6 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Zatvaranje veze s bazom
+
 mysqli_close($con);
 ?>
